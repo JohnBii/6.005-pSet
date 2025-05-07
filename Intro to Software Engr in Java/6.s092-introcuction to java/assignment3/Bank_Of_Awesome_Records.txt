@@ -1,0 +1,15 @@
+/bankName Bank Of Awesome!!!
+/bankBalance 1000000.00
+/bankFDIC true
+
+12544855 Owner Hau Lian 3/14/1592
+12544855 Person Who Hay 2/12/1985
+12544855 Person Huai Yu 4/1/2004
+12544855 Password pass
+12544855 Type personal
+12544855 Balance 42.42
+97855481 Owner Jaxen Falsenhorn 6/22/1981
+97855481 Person Watta Kless 8/7/1952
+97855481 Person Anita Nae 7/13/1658
+97855481 Person Kans Umwon 11/8/1963
+97855481 Person Haelp Meewaydis 6/02/1023

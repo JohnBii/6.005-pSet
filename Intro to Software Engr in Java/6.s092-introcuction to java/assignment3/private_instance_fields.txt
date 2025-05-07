@@ -1,0 +1,9 @@
+private final JLabel WELCOME_MESSAGE = new JLabel(getWelcomeMessage());
+	private final JLabel USERNAME = new JLabel("Username: ");
+	private final JLabel PASSWORD = new JLabel("Password: ");
+	
+	private final JTextField userName = new JTextField();
+	private final JTextField password = new JTextField();
+	
+	private final JButton LOG_IN = new JButton("LOG IN");
+	private final JButton CREATE_NEW_ACCOUNT = new JButton("Create A New Account");

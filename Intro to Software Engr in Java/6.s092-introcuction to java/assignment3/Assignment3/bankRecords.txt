@@ -1,0 +1,17 @@
+/bankName Bank Of Awesome!!!
+/bankBalance 1000000.00
+/bankFDIC true
+
+12544855 /o Hau Lian 3/14/1592
+12544855 /a Who Hay 2/12/1985
+12544855 /a Huai Yu 4/1/2004
+12544855 /u hlian
+12544855 /p pass
+12544855 /t personal
+12544855 /b 42.42
+97855481 /o Jaxen Falsenhorn 6/22/1981
+97855481 /p wakawakawaka
+97855481 /a Watta Kless 8/7/1952
+97855481 /a Anita Nae 7/13/1658
+97855481 /a Kans Umwon 11/8/1963
+97855481 /a Haelp Meewaydis 6/02/1023

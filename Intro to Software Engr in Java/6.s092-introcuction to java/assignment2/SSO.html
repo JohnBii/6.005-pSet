@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  	<head>
+        <meta http-equiv="pragma" content="no-cache" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    	<title>Touchstone Collaboration Account Login</title>
+    	<link rel="stylesheet" type="text/css" href="/idp/css/camslogin.css">
+        <script type="text/javascript" charset="utf-8">
+          function setFocus () {
+              // default to email field
+              document.getElementById('loginform')['j_username'].focus();
+          }
+        </script>
+  	</head>
+
+  	<body>
+    <body onload="setFocus()">
+      <div id="mit-mast">
+	<h1>Touchstone Collaboration Account Login</h1>
+	<ul>
+	  <li>
+	    <a href="/idp/help.html">help</a>
+	  </li>
+	</ul>
+      </div>
+
+      <div id="loginbox">
+	<h2>Welcome, please identify yourself to access MIT services.</h2>
+
+
+            <form action="/idp/profile/SAML2/Redirect/SSO?execution=e1s1" method="post" id="loginform" name="loginform" class="login">
+	  <div class="helpbox">
+	    You can login by entering the email address and password
+	    with which you registered your MIT Touchstone collaboration
+	    account.
+	  </div>
+	  <fieldset>
+	    <legend>
+	      Your collaboration account email &amp; password
+	    </legend>
+	    <label><strong>Email:</strong>
+                <input id="j_username" name="j_username" type="text" size="16"
+                	value="" />
+	    </label>
+	    <label><strong>Password:</strong>
+	      <input name="j_password" type="password" id="j_password" size="16" value="" />
+	      <input name="_eventId_proceed" type="submit" id="Login" value="Login" 
+                    onClick="this.childNodes[0].nodeValue='Logging in, please wait...'" />
+	    </label>
+	    <label>
+	      <a href="/cams/forgotpassword.action">Forgot password?</a>
+	    </label>
+	  </fieldset>
+	</form>
+      </div>
+
+
+      <div id="foot">
+	<p>
+	  <a href="http://web.mit.edu/">massachusetts institute of technology</a>
+	</p>
+      </div>
+    </div>
+    
+ 	</body>
+</html>

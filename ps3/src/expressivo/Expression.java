@@ -17,7 +17,7 @@ package expressivo;
 public interface Expression {
     
     // Datatype definition
-    //   TODO
+    // Expression = Number + Variable + Plus(Expression, Expression) + Times(Expression, Expression)
     
     /**
      * Parse an expression.

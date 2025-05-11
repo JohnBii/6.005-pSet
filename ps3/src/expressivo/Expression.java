@@ -3,6 +3,19 @@
  */
 package expressivo;
 
+import org.antlr.v4.gui.Trees;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.antlr.v4.runtime.tree.TerminalNode;
+import org.antlr.v4.runtime.tree.ErrorNode;
+
+import expressivo.parser.ExpressionListener;
+import expressivo.parser.ExpressionLexer;
+import expressivo.parser.ExpressionParser;
+
 /**
  * An immutable data type representing a polynomial expression of:
  *   + and *
@@ -17,7 +30,7 @@ package expressivo;
 public interface Expression {
     
     // Datatype definition
-    // Expression = Number + Variable + Plus(Expression, Expression) + Times(Expression, Expression)
+    // Expression = Number(n:double) + Variable(name:String) + Plus(left:Expression, right:Expression) + Times(left:Expression, right:Expression)
     
     /**
      * Parse an expression.
@@ -26,7 +39,22 @@ public interface Expression {
      * @throws IllegalArgumentException if the expression is invalid
      */
     public static Expression parse(String input) {
-        throw new RuntimeException("unimplemented");
+        CharStream inputStream = new ANTLRInputStream(input);
+        ExpressionLexer lexer = new ExpressionLexer(inputStream);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        ExpressionParser parser = new ExpressionParser(tokens);
+        ParseTree tree = parser.root();
+
+        // *** Debugging option #1: print the tree to the console
+       System.err.println(tree.toStringTree(parser));
+
+       // *** Debugging option #2: show the tree in a window
+       // Trees.inspect(tree, parser);
+
+       ParseTreeWalker walker = new ParseTreeWalker();
+
+
+
     }
     
     /**
@@ -53,5 +81,50 @@ public interface Expression {
     public int hashCode();
     
     // TODO more instance methods
-    
+    class MakeExpresion implements ExpressionListener {
+        @Override
+        public void enterRoot(ExpressionParser.RootContext ctx) {
+            System.out.println("enterRoot");
+        }   
+
+        @Override
+        public void enterMultiply(ExpressionParser.MultiplyContext ctx) {
+            System.out.println("enterMultiply");
+        }   
+
+        @Override
+        public void enterSum(ExpressionParser.SumContext ctx) {
+            System.out.println("enterSum");
+        }      
+
+        @Override
+        public void enterPrimitive(ExpressionParser.PrimitiveContext ctx) {
+            System.out.println("enterPrimitive");
+        }      
+
+        @Override
+        public void visitTerminal(TerminalNode node) {
+            System.out.println("visitTerminal");
+        }
+
+        @Override
+        public void visitErrorNode(ErrorNode node) {
+            System.out.println("visitErrorNode");
+        }
+
+        @Override
+        public void enterEveryRule(ParserRuleContext ctx) {
+        }
+
+        @Override
+        public void exitEveryRule(ParserRuleContext ctx) {
+        }
+            
+        
+        
+        
+        
+        
+    }
+
 }

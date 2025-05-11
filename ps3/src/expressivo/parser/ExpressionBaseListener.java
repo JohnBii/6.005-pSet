@@ -31,6 +31,18 @@ public class ExpressionBaseListener implements ExpressionListener {
    *
    * <p>The default implementation does nothing.</p>
    */
+  @Override public void enterMultiply(ExpressionParser.MultiplyContext ctx) { }
+  /**
+   * {@inheritDoc}
+   *
+   * <p>The default implementation does nothing.</p>
+   */
+  @Override public void exitMultiply(ExpressionParser.MultiplyContext ctx) { }
+  /**
+   * {@inheritDoc}
+   *
+   * <p>The default implementation does nothing.</p>
+   */
   @Override public void enterSum(ExpressionParser.SumContext ctx) { }
   /**
    * {@inheritDoc}

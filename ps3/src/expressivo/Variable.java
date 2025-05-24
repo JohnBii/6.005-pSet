@@ -72,4 +72,19 @@ public class Variable implements Expression {
     public int hashCode() {
         return name.hashCode();
     }
+
+    /**
+     * 计算变量表达式相对于给定变量的导数
+     * 
+     * @param variable 要进行求导的变量
+     * @return 表达式相对于给定变量的导数
+     */
+    @Override
+    public Expression differentiate (String variable) {
+        if (name.equals(variable)) {
+            return new Number(1);
+        } else {
+            return new Number(0);
+        }
+    }
 }

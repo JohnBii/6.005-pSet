@@ -79,4 +79,15 @@ public class Plus implements Expression {
     public int hashCode() {
         return Objects.hash(left, right);
     }
+
+    /**
+     * 计算加法表达式相对于给定变量的导数
+     * 
+     * @param variable 要进行求导的变量
+     * @return 表达式相对于给定变量的导数
+     */
+    @Override
+    public Expression differentiate(String variable) {
+        return new Plus(left.differentiate(variable), right.differentiate(variable));
+    }
 }

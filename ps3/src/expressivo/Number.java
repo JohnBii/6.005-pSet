@@ -59,4 +59,14 @@ public class Number implements Expression {
         return Double.hashCode(value);
     }
     
+    /**
+     * 计算数字表达式相对于给定变量的导数
+     * 
+     * @param variable 要进行求导的变量
+     * @return 表达式相对于给定变量的导数
+     */ 
+    @Override
+    public Expression differentiate(String variable) {
+        return new Number(0);
+    }   
 }

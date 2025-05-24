@@ -70,4 +70,15 @@ public class Multiply implements Expression {
     public int hashCode() {
         return Objects.hash(left, right);
     }
+
+    /**
+     * 计算乘法表达式相对于给定变量的导数
+     * 
+     * @param variable 要进行求导的变量
+     * @return 表达式相对于给定变量的导数
+     */
+    @Override
+    public Expression differentiate(String variable) {
+        return new Plus(new Multiply(left.differentiate(variable), right), new Multiply(left, right.differentiate(variable)));
+    }
 }

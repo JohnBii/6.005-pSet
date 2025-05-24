@@ -45,6 +45,13 @@ public class ExpressionTest {
     //    - 测试大数字
     //    - 测试特殊变量名
     //    - 测试复杂嵌套表达式
+    //
+    // 7. differentiate() 方法测试:
+    //    - 测试数字表达式的导数
+    //    - 测试变量表达式的导数
+    //    - 测试加法表达式的导数
+    //    - 测试乘法表达式的导数
+    //    - 测试嵌套表达式的导数    
     
     @Test(expected=AssertionError.class)
     public void testAssertionsEnabled() {
@@ -185,5 +192,29 @@ public class ExpressionTest {
         // 测试复杂嵌套表达式
         Expression complexExpr = Expression.parse("((a + b) * (c + d)) + (e * f)");
         assertEquals("((a + b) * (c + d) + e * f)", complexExpr.toString());
+    }
+
+    // 7. differentiate() 方法测试
+    @Test
+    public void testDifferentiate() {
+        //  测试数字表达式的导数
+        Expression number = Expression.parse("42");
+        assertEquals("0", number.differentiate("x").toString());
+        //  测试变量表达式的导数
+        Expression variable = Expression.parse("x");
+        assertEquals("1", variable.differentiate("x").toString());
+        assertEquals("0", variable.differentiate("y").toString());  
+        //  测试加法表达式的导数
+        Expression plus = Expression.parse("x + x + y");
+        assertEquals("(1 + (1 + 0))", plus.differentiate("x").toString());
+        assertEquals("(0 + (0 + 1))", plus.differentiate("y").toString());
+        //  测试乘法表达式的导数
+        Expression times = Expression.parse("x * x * y");   
+        assertEquals("(1 * x * y + x * (1 * y + x * 0))", times.differentiate("x").toString());
+        assertEquals("(0 * x * y + x * (0 * y + x * 1))", times.differentiate("y").toString());
+        //  测试嵌套表达式的导数  
+        Expression nested = Expression.parse("(x + y) * (z + w)");
+        assertEquals("((1 + 0) * (z + w) + (x + y) * (0 + 0))", nested.differentiate("x").toString());
+        assertEquals("((0 + 1) * (z + w) + (x + y) * (0 + 0))", nested.differentiate("y").toString());
     }
 }

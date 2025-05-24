@@ -50,15 +50,15 @@ public interface Expression {
         ParseTree tree = parser.root();
 
         // *** Debugging option #1: print the tree to the console
-       System.err.println(tree.toStringTree(parser));
+        // System.err.println(tree.toStringTree(parser));
 
-       // *** Debugging option #2: show the tree in a window
-       // Trees.inspect(tree, parser);
+        // *** Debugging option #2: show the tree in a window
+        // Trees.inspect(tree, parser);
 
-       ParseTreeWalker walker = new ParseTreeWalker();
-       MakeExpresion listener = new MakeExpresion();
-       walker.walk(listener, tree);
-       return listener.getExpression();
+        ParseTreeWalker walker = new ParseTreeWalker();
+        MakeExpresion listener = new MakeExpresion();
+        walker.walk(listener, tree);
+        return listener.getExpression();
 
 
     }
@@ -85,6 +85,14 @@ public interface Expression {
      */
     @Override
     public int hashCode();
+
+    /**
+     * 计算表达式相对于给定变量的导数。
+     * 
+     * @param variable 要进行求导的变量
+     * @return 表达式相对于给定变量的导数
+     */
+    public Expression differentiate(String variable);
     
     // TODO more instance methods
     /**

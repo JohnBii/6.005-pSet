@@ -148,12 +148,12 @@ public interface Expression {
          * 要求该监听器已经使用 ParseTreeWalker 完全遍历了一个 Expression 解析树。
          * 
          * @return 被遍历的解析树对应的 Expression
-         * @throws IllegalStateException 如果监听器尚未完全遍历解析树
+         * @throws IllegalArgumentException 如果输入的表达式不合法
          */
         public Expression getExpression() {
             checkRep();
             if (stack.isEmpty()) {
-                throw new IllegalStateException("监听器尚未完全遍历解析树");
+                throw new IllegalArgumentException("输入的表达式不合法");
             }
             Expression result = stack.get(0);
             checkRep();

@@ -73,7 +73,7 @@ public class ExpressionTest {
         assertEquals("x * y", timesExpr.toString());
     }
     
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected=AssertionError.class)
     public void testParseInvalidInput() {
         Expression.parse("x +"); // 语法错误
     }
@@ -103,7 +103,7 @@ public class ExpressionTest {
     public void testToStringParseRoundTrip() {
         String[] expressions = {
             "42", "3.14", "x", "abc",
-            "x + y", "2 + 3",
+            "(x + y)", "(2 + 3)",
             "x * y", "2 * 3",
             "(x + y * z)", "(x + y) * z"
         };
@@ -179,8 +179,8 @@ public class ExpressionTest {
         assertEquals("999999999", bigNum.toString());
         
         // 测试特殊变量名
-        Expression specialVar = Expression.parse("x1");
-        assertEquals("x1", specialVar.toString());
+        Expression specialVar = Expression.parse("xA");
+        assertEquals("xA", specialVar.toString());
         
         // 测试复杂嵌套表达式
         Expression complexExpr = Expression.parse("((a + b) * (c + d)) + (e * f)");

@@ -39,6 +39,10 @@ public class Number implements Expression {
     }
     @Override
     public String toString() {
+        // 检查value是否为整数
+        if (value == Math.floor(value) && !Double.isInfinite(value)) {
+            return Integer.toString((int)value);
+        }
         return Double.toString(value);
     }   
 

@@ -1,4 +1,5 @@
 package expressivo;
+import java.util.Map;
 
 /**
  * 表示一个变量。
@@ -85,6 +86,21 @@ public class Variable implements Expression {
             return new Number(1);
         } else {
             return new Number(0);
+        }
+    }
+
+    /**
+     * 在参数environment中，给定了变量对应的值，计算出表达式简化后的结果
+     *
+     * @param environment 变量和对应值的映射
+     * @return 根据变量的实际值尽可能简化后的表达式
+     */
+    @Override
+    public Expression simplify(Map<String, Double> environment) {
+        if (environment.containsKey(this.toString())) {
+            return Expression.parse(environment.get(this.toString()).toString());
+        } else {
+            return this;
         }
     }
 }

@@ -6,6 +6,8 @@ package expressivo;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Tests for the Expression abstract data type.
@@ -51,7 +53,15 @@ public class ExpressionTest {
     //    - 测试变量表达式的导数
     //    - 测试加法表达式的导数
     //    - 测试乘法表达式的导数
-    //    - 测试嵌套表达式的导数    
+    //    - 测试嵌套表达式的导数 
+    //
+    // 8. simplify() 方法测试：
+    //    - 测试数字表达式的简化
+    //    - 测试变量表达式的简化
+    //      - matched or unmatched
+    //    - 测试加法表达式的简化
+    //    - 测试乘法表达式的简化
+    //    - 测试嵌套表达式的简化   
     
     @Test(expected=AssertionError.class)
     public void testAssertionsEnabled() {
@@ -216,5 +226,39 @@ public class ExpressionTest {
         Expression nested = Expression.parse("(x + y) * (z + w)");
         assertEquals("((1 + 0) * (z + w) + (x + y) * (0 + 0))", nested.differentiate("x").toString());
         assertEquals("((0 + 1) * (z + w) + (x + y) * (0 + 0))", nested.differentiate("y").toString());
+    }
+
+    // 8. simplify() 方法测试
+    @Test
+    public void testSimplify() {
+        Map<String, Double> environmentMap = new HashMap<>();
+        environmentMap.put("x", 39.5);
+        environmentMap.put("y", 2.0);
+        
+        // 测试数字表达式的简化
+        Expression number = Expression.parse("42");
+        assertEquals("42", number.simplify(environmentMap).toString());
+        // 测试变量表达式的简化
+        Expression variable1 = Expression.parse("x");
+        Expression variable2 = Expression.parse("Va");
+        assertEquals("39.5", variable1.simplify(environmentMap).toString());
+        assertEquals("Va", variable2.simplify(environmentMap).toString());
+        // 测试加法表达式的简化
+        Expression plus1 = Expression.parse("x + x + Va");
+        Expression plus2 = Expression.parse("x + x + y");
+        assertEquals("(39.5 + (39.5 + Va))", plus1.simplify(environmentMap).toString());
+        assertEquals("81", plus2.simplify(environmentMap).toString());
+        // 测试乘法表达式的简化
+        Expression times1 = Expression.parse("x * x * Va");
+        Expression times2 = Expression.parse("x * x * y");
+        assertEquals("39.5 * 39.5 * Va", times1.simplify(environmentMap).toString());
+        assertEquals("3120.5", times2.simplify(environmentMap).toString());
+        // 测试嵌套表达式的简化
+        Expression complex1 = Expression.parse("(x + y) * (Va + y)");
+        Expression complex2 = Expression.parse("(y * y) + (x * y)");
+        environmentMap.put("y", 2.0);
+        environmentMap.put("x", 0.0);
+        assertEquals("2 * (Va + 2)", complex1.simplify(environmentMap).toString());
+        assertEquals("4", complex2.simplify(environmentMap).toString());
     }
 }

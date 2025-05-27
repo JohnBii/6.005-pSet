@@ -2,6 +2,10 @@ package expressivo;
 
 import java.util.Objects;
 
+import org.antlr.v4.parse.ANTLRParser.elementOptions_return;
+
+import java.util.Map;
+
 /**
  * 表示两个表达式的加法运算。
  * 
@@ -90,4 +94,61 @@ public class Plus implements Expression {
     public Expression differentiate(String variable) {
         return new Plus(left.differentiate(variable), right.differentiate(variable));
     }
+
+    /**
+     * 
+     * 根据environment中变量的赋值，简化表达式，并尽量合并数字
+     * 
+     * @param environment 变量和对应的映射值
+     * @return 简化后的表达式
+     */
+    @Override
+    public Expression simplify(Map<String, Double> environment) {
+        Expression simplifiedLeft = left.simplify(environment);
+        Expression simplifiedRight = right.simplify(environment);
+
+
+        return addExpression(simplifiedLeft, simplifiedRight);
+    }
+
+    /**
+     * 合并两个表达式
+     *
+     * @param left 左操作数表达式
+     * @param right 右操作数表达式
+     * @return 合并后的表达式
+     */
+    private Expression addExpression(Expression left, Expression right) {
+        // 如果左右子项表达式都是数字，则直接相加
+        // 如果左右子项任意一项为0，则返回另一项
+
+        if (isNumber(left)) {
+            if (Double.parseDouble(left.toString()) == 0) {
+                return right;
+            }
+            if (isNumber(right)) {
+                return new Number(Double.parseDouble(left.toString()) + 
+                    Double.parseDouble(right.toString()));
+            }
+        } else if (isNumber(right)) {
+            if (Double.parseDouble(right.toString()) == 0) {
+                return left;
+            }
+        } 
+
+        return new Plus(left, right);
+
+    }
+
+    private boolean isNumber(Expression expression) {
+        String str = expression.toString();
+        for (char c : str.toCharArray()) {
+            if (Character.isLetter(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    
 }

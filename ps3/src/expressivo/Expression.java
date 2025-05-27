@@ -4,6 +4,7 @@
 package expressivo;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 import org.antlr.v4.gui.Trees;
@@ -93,6 +94,14 @@ public interface Expression {
      * @return 表达式相对于给定变量的导数
      */
     public Expression differentiate(String variable);
+
+    /**
+     *  在参数environment中，给定了变量对应的值，计算出表达式简化后的结果
+     * 
+     * @param environment 变量和对应值的映射
+     * @return 根据变量的实际值尽可能简化后的表达式
+     */
+    public Expression simplify(Map<String, Double> environment);
     
     // TODO more instance methods
     /**

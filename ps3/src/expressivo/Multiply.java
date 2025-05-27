@@ -1,6 +1,7 @@
 package expressivo;
 
 import java.util.Objects;
+import java.util.Map;
 
 /**
  * 表示两个表达式的乘法运算。
@@ -80,5 +81,58 @@ public class Multiply implements Expression {
     @Override
     public Expression differentiate(String variable) {
         return new Plus(new Multiply(left.differentiate(variable), right), new Multiply(left, right.differentiate(variable)));
+    }
+
+    @Override
+    public Expression simplify(Map<String, Double> environment) {
+        Expression leftSimplified = left.simplify(environment);
+        Expression rightSimplified = right.simplify(environment);
+        return multiplyExpression(leftSimplified, rightSimplified);
+    }
+
+    /**
+     * 用乘法合并两个表达式
+     *
+     * @param left 左操作数表达式
+     * @param right 右操作数表达式
+     * @return 合并后的表达式
+     */
+    private Expression multiplyExpression(Expression left, Expression right) {
+        // 如果左右子项表达式都是数字，则直接相乘
+        // 如果左右子项任意一项为0，则返回0
+        // 如果左右子项任意一项为1，则返回另一项
+
+        if (isNumber(left)) {
+            if (Double.parseDouble(left.toString()) == 0) {
+                return new Number(0);
+            }
+            if (Double.parseDouble(left.toString()) == 1) {
+                return right;
+            }
+            if (isNumber(right)) {
+                return new Number(Double.parseDouble(left.toString()) * 
+                    Double.parseDouble(right.toString()));
+            }
+        } else if (isNumber(right)) {
+            if (Double.parseDouble(right.toString()) == 0) {
+                return new Number(0);
+            }
+            if (Double.parseDouble(right.toString()) == 1) {
+                return left;
+            }
+        } 
+
+        return new Multiply(left, right);
+
+    }
+
+    private boolean isNumber(Expression expression) {
+        String str = expression.toString();
+        for (char c : str.toCharArray()) {
+            if (Character.isLetter(c)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

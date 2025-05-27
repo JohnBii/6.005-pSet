@@ -1,4 +1,5 @@
 package expressivo;
+import java.util.Map;
 
 /**
  * 表示一个数字。
@@ -69,4 +70,15 @@ public class Number implements Expression {
     public Expression differentiate(String variable) {
         return new Number(0);
     }   
+
+    /**
+     * 根据environment中的变量值，简化表达式
+     *
+     * @param environment 变量和对应值的映射
+     * @return 根据变量的实际值尽可能简化后的表达式
+     */
+    @Override
+    public Expression simplify(Map<String, Double> environment) {
+        return this;
+    }
 }

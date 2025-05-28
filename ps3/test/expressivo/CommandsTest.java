@@ -6,6 +6,8 @@ package expressivo;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Tests for the static methods of Commands.
@@ -45,5 +47,29 @@ public class CommandsTest {
         //  测试嵌套表达式的导数  
         assertEquals("((1 + 0) * (z + w) + (x + y) * (0 + 0))", Commands.differentiate("(x + y) * (z + w)", "x"));
         assertEquals("((0 + 1) * (z + w) + (x + y) * (0 + 0))", Commands.differentiate("(x + y) * (z + w)", "y"));
+    }
+
+    @Test
+    public void testSimplify() {
+        Map<String, Double> environmentMap = new HashMap<>();
+        environmentMap.put("x", 39.5);
+        environmentMap.put("y", 2.0);
+        
+        // 测试数字表达式的简化
+        assertEquals("42", Commands.simplify("42", environmentMap));
+        // 测试变量表达式的简化
+        assertEquals("39.5", Commands.simplify("x", environmentMap));
+        assertEquals("Va", Commands.simplify("Va", environmentMap));
+        // 测试加法表达式的简化
+        assertEquals("(39.5 + (39.5 + Va))", Commands.simplify("x + x + Va", environmentMap));
+        assertEquals("81", Commands.simplify("x + x + y", environmentMap));
+        // 测试乘法表达式的简化
+        assertEquals("39.5 * 39.5 * Va", Commands.simplify("x * x * Va", environmentMap));
+        assertEquals("3120.5", Commands.simplify("x * x * y", environmentMap));
+        // 测试嵌套表达式的简化
+        environmentMap.put("y", 2.0);
+        environmentMap.put("x", 0.0);
+        assertEquals("2 * (Va + 2)", Commands.simplify("(x + y) * (Va + y)", environmentMap));
+        assertEquals("4", Commands.simplify("(y * y) + (x * y)", environmentMap));
     }
 }

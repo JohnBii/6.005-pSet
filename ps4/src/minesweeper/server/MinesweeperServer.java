@@ -55,11 +55,18 @@ public class MinesweeperServer {
             // block until a client connects
             Socket socket = serverSocket.accept();
 
-            // handle the client
+            // handle multi-client asynchronously
             try {
-                handleConnection(socket);
-            } catch (IOException ioe) {
-                ioe.printStackTrace(); // but don't terminate serve()
+                new Thread(new Runnable() {
+                    public void run() {
+                        try {
+                            handleConnection(socket);
+                        } catch (IOException ioe) {
+                            // this exception would be thrown from handleConnection
+                            ioe.printStackTrace(); // but don't terminate serve()
+                        }
+                    }
+                }).start();
             } finally {
                 socket.close();
             }
